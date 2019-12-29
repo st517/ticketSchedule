@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TicketSchedul</string>
     <string name="title">title</string>
-    <string name="date">yyyy/mm/dd</string>
+    <string name="date">yyyy/mm/dd ~ yyyy/mm/dd</string>
     <string name="memo">memo</string>
+    <string name="add">add</string>
 </resources>
