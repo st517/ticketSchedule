@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MainActivity">
-
+    tools:context=".Activity.DetailActivity">
 
     <ImageView
-        android:id="@+id/main_add"
+        android:id="@+id/detail_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/add"
@@ -17,11 +16,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/main_list"
+        android:id="@+id/detail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
-        app:layout_constraintTop_toBottomOf="@id/main_add" />
+        app:layout_constraintTop_toBottomOf="@id/detail_add" />
 
     <TextView
         android:id="@+id/no_data"
@@ -29,5 +28,5 @@
         android:layout_height="wrap_content"
         android:text="@string/no_data"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/main_add" />
+        app:layout_constraintTop_toBottomOf="@id/detail_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

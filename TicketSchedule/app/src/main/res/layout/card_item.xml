@@ -3,28 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/card_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/date" />
 
         <TextView
-            android:id="@+id/memo"
+            android:id="@+id/card_memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/memo" />
