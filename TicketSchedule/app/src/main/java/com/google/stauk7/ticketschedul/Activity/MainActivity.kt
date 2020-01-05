@@ -1,19 +1,23 @@
 package com.google.stauk7.ticketschedul.Activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventData
 import com.google.stauk7.ticketschedul.R
+import com.google.stauk7.ticketscheseledul.Helper.EventBaseHelper
 
 class MainActivity : AppCompatActivity() {
     val EVENT_ID = "event id"
+    val TITLE = "title"
+    val MEMO = "memo"
     lateinit var listView: ListView
 
     var mainList: MutableList<Map<String, String>> = mutableListOf()
     var eventDataList: MutableList<EventData> = mutableListOf()
+    val dbHelper = EventBaseHelper(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,14 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        // TODO DBからデータ取得
-        eventDataList.add(EventData("title1", "memo1", 0))
-        eventDataList.add(EventData("title2", "memo2", 0))
-        for (eventData in eventDataList) {
-            val map = mapOf("title" to eventData.title, "memo" to eventData.memo)
-            mainList.add(map)
-        }
-
+        eventDataList = dbHelper.selectAll()
     }
 
     private fun initView() {
@@ -41,6 +38,10 @@ class MainActivity : AppCompatActivity() {
             listView.visibility = View.GONE
             findViewById<TextView>(R.id.no_data).visibility = View.VISIBLE
         } else {
+            for (event in eventDataList) {
+                val eventMap = mapOf(TITLE to event.title, MEMO to event.memo)
+                mainList.add(eventMap)
+            }
             val adapter = SimpleAdapter(
                 this,
                 mainList,
@@ -56,9 +57,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<ImageView>(R.id.main_add).setOnClickListener{
-            val i = Intent(this, DetailActivity::class.java)
-            startActivity(i)
+
+        findViewById<ImageView>(R.id.main_add).setOnClickListener {
+            val title = findViewById<EditText>(R.id.input_title).text.toString()
+            val memo = findViewById<EditText>(R.id.input_memo).text.toString()
+            dbHelper.saveData(EventData(title, memo))
+
+            val intent = Intent(this, DetailActivity::class.java)
+//            intent.putExtra(EVENT_ID, position)
+            startActivity(intent)
         }
+
     }
 }
