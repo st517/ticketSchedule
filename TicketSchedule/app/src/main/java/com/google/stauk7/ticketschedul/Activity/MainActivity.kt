@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventData
 import com.google.stauk7.ticketschedul.R
-import com.google.stauk7.ticketscheseledul.Helper.EventBaseHelper
+import com.google.stauk7.ticketschedul.Helper.EventBaseHelper
 
 class MainActivity : AppCompatActivity() {
     val EVENT_ID = "event id"
@@ -24,15 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initData()
         initView()
     }
 
-    private fun initData() {
-        eventDataList = dbHelper.selectAll()
-    }
-
     private fun initView() {
+        eventDataList = dbHelper.selectBaseAll()
         listView = findViewById(R.id.main_list)
         if (eventDataList.isNullOrEmpty()) {
             listView.visibility = View.GONE
@@ -52,8 +48,8 @@ class MainActivity : AppCompatActivity() {
             listView.adapter = adapter
         }
         listView.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, DetailActivity::class.java)
-//            intent.putExtra(EVENT_ID, position)
+            val intent = Intent(this, DetailListActivity::class.java)
+            intent.putExtra(EVENT_ID, eventDataList[position].id)
             startActivity(intent)
         }
 
@@ -61,11 +57,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.main_add).setOnClickListener {
             val title = findViewById<EditText>(R.id.input_title).text.toString()
             val memo = findViewById<EditText>(R.id.input_memo).text.toString()
-            dbHelper.saveData(EventData(title, memo))
-
-            val intent = Intent(this, DetailActivity::class.java)
-//            intent.putExtra(EVENT_ID, position)
-            startActivity(intent)
+            dbHelper.saveBaseData(EventData(-1, title, memo))
+            initView()
         }
 
     }

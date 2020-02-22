@@ -11,4 +11,6 @@
     <string name="cancel">cancel</string>
     <string name="ok">OK</string>
     <string name="dialog">dialog</string>
+    <string name="date_start">date start</string>
+    <string name="date_end">date end</string>
 </resources>

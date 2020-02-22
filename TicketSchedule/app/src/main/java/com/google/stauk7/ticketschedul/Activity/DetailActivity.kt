@@ -1,33 +1,57 @@
 package com.google.stauk7.ticketschedul.Activity
 
 import android.os.Bundle
-import android.widget.ListView
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventDetailData
+import com.google.stauk7.ticketschedul.Helper.EventDetailHelper
 import com.google.stauk7.ticketschedul.R
-import com.google.stauk7.ticketschedul.Ui.CardAdapter
 
 class DetailActivity : AppCompatActivity() {
+
     val EVENT_ID = "event id"
-    private val eventDetailList: MutableList<EventDetailData> = mutableListOf()
+    val DETAIL_ID = "detail id"
+
+    var editId: Int? = null
+    var detailId: Int? = null
+    private lateinit var etTitle: EditText
+    private lateinit var etDateStart: EditText
+    private lateinit var etDateEnd: EditText
+    private lateinit var etMemo: EditText
+
+    val dbHelper = EventDetailHelper(this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val id = intent.getIntExtra(EVENT_ID, 0)
-        loadData(id)
+        editId = intent.getIntExtra(EVENT_ID, -1)
+        detailId = intent.getIntExtra(DETAIL_ID, -1)
         initView()
+        findViewById<Button>(R.id.save).setOnClickListener { saveDetail() }
     }
 
-    private fun loadData(id: Int){
-        // TODO EventIDに一致するdetailをDBから取得
-        eventDetailList.add(EventDetailData("title1", "yyyy/mm/dd", "yyyy/mm/dd", "memo1", 0, 0))
-        eventDetailList.add(EventDetailData("title2", "yyyy/mm/dd", "yyyy/mm/dd", "memo2", 0, 0))
+    private fun initView() {
+        etTitle = findViewById(R.id.detail_title)
+        etDateStart = findViewById(R.id.detail_date_start)
+        etDateEnd = findViewById(R.id.detail_date_end)
+        etMemo = findViewById(R.id.detail_memo)
     }
 
-    private fun initView(){
-        val listView = findViewById<ListView>(R.id.detail_list)
-        listView.adapter = CardAdapter(this, eventDetailList)
-    }
+    fun saveDetail() {
+        if (detailId == -1) {
+            val data = EventDetailData(
+                editId!!,
+                 -1,
+                etTitle.text.toString(),
+                etDateStart.text.toString(),
+                etDateEnd.text.toString(),
+                etMemo.text.toString()
+            )
+            dbHelper.insertDetailData(data)
+            finish()
+        }
 
+    }
 }
