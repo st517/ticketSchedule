@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventDetailData
-import com.google.stauk7.ticketschedul.Helper.EventDetailHelper
+import com.google.stauk7.ticketschedul.Helper.EventDBHelper
 import com.google.stauk7.ticketschedul.R
 
 class DetailActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var etDateEnd: EditText
     private lateinit var etMemo: EditText
 
-    val dbHelper = EventDetailHelper(this)
+    val dbHelper = EventDBHelper(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +40,15 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun saveDetail() {
-        if (detailId == -1) {
-            val data = EventDetailData(
-                editId!!,
-                 -1,
-                etTitle.text.toString(),
-                etDateStart.text.toString(),
-                etDateEnd.text.toString(),
-                etMemo.text.toString()
-            )
-            dbHelper.insertDetailData(data)
-            finish()
-        }
-
+        val data = EventDetailData(
+            editId!!,
+            detailId ?: -1,
+            etTitle.text.toString(),
+            etDateStart.text.toString(),
+            etDateEnd.text.toString(),
+            etMemo.text.toString()
+        )
+        dbHelper.saveDetailData(data)
+        finish()
     }
 }

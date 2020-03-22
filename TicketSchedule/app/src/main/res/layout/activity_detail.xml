@@ -78,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="save"
+            android:textColor="@color/white"
             android:textAlignment="center"/>
     </LinearLayout>
 </LinearLayout>

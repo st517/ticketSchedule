@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventData
 import com.google.stauk7.ticketschedul.R
-import com.google.stauk7.ticketschedul.Helper.EventBaseHelper
+import com.google.stauk7.ticketschedul.Helper.EventDBHelper
 
 class MainActivity : AppCompatActivity() {
     val EVENT_ID = "event id"
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     var mainList: MutableList<Map<String, String>> = mutableListOf()
     var eventDataList: MutableList<EventData> = mutableListOf()
-    val dbHelper = EventBaseHelper(this)
+    val dbHelper = EventDBHelper(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        eventDataList = dbHelper.selectBaseAll()
+        mainList.clear()
+        eventDataList = dbHelper.selectEventAll()
         listView = findViewById(R.id.main_list)
         if (eventDataList.isNullOrEmpty()) {
             listView.visibility = View.GONE

@@ -8,33 +8,34 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.stauk7.ticketschedul.Data.EventData
 import com.google.stauk7.ticketschedul.Data.EventDetailData
-import com.google.stauk7.ticketschedul.Helper.EventBaseHelper
+import com.google.stauk7.ticketschedul.Helper.EventDBHelper
 import com.google.stauk7.ticketschedul.R
 import com.google.stauk7.ticketschedul.Ui.CardAdapter
-import com.google.stauk7.ticketschedul.Helper.EventDetailHelper
 
 class DetailListActivity : AppCompatActivity() {
     val EVENT_ID = "event id"
     val DETAIL_ID = "detail id"
     private var eventDetailList: MutableList<EventDetailData> = mutableListOf()
     var eventId: Int? = null
-    val dbBaseHelper = EventBaseHelper(this)
-    val dbDetailHelper = EventDetailHelper(this)
+    val dbBaseHelper = EventDBHelper(this)
     var eventData: EventData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_list)
         eventId = intent.getIntExtra(EVENT_ID, 0)
-        loadData()
-        initView()
         findViewById<ImageView>(R.id.detail_add).setOnClickListener { addFunction() }
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadData()
+        initView()
+    }
     private fun loadData() {
         if (eventId != null) {
             eventData = dbBaseHelper.selectEvent(eventId!!)
-            eventDetailList = dbDetailHelper.selectDetailAll(eventId!!)
+            eventDetailList = dbBaseHelper.selectDetailAll(eventId!!)
         }
     }
 
